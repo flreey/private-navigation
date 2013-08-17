@@ -33,3 +33,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+#pycache
+__pycache__
+
+#vim
+*.sw*
