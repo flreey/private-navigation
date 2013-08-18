@@ -4,14 +4,24 @@ app = Flask(__name__)
 app.config.from_object('config.settings.DevelpmentConfig')
 
 with app.app_context():
-	from models.website import WebSite
+	from models import *
 
 @app.route('/')
 def index():
-	if not session.get('user_id'):
-		websites = WebSite.query.all()
-		print(websites)
-		return render_template('index.html')
+	user_id = session.get('user_id', 1)
+
+	cats = Category.query.filter('user_id=:user_id').params(user_id=user_id).all()	
+	results = []
+	for c in cats:
+		webs = WebSite.query.filter('category_id=:category_id').params(category_id=c.id).all()
+		results.append({c: webs})
+
+	step = 5
+	navis = [[] for i in range(step)]
+	for n, r in enumerate(results):
+		navis[n % step].append(r)
+
+	return render_template('index.html', navis=navis)
 
 def main():
 	app.run(debug=True)

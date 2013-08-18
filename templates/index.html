@@ -1,61 +1,38 @@
 {% extends "layout.html" %}
-{% block style %}
-<style type="text/css">
-
-</style>
+{% block expand_script %}
+<link rel="stylesheet" href="{{url_for('static', filename='index.css')}}" />
 {% endblock %}
-{% block container %}
 
+{% block container %}
 <div class="row">
+	<form method="get" action="http://www.google.com/search" class="form-inline" role="form" target="_blank">
+			<div class="col-md-8">
+				<input type="text" name="q" class="form-control" maxlength="255" value="" autofocus/>
+			</div>
+			<input type="submit" value="Google" />
+</div>
+<div class="clearfix"></div>
+<div class="row">
+	{% for navi in navis %}
 	<div class="col-lg-2">
-		<a href="#" target="_blank">Blog</a>
-		<ul>
-			<li>InfoQ</li>
-			<li>ItEye</li>
-			<li>CSDN</li>
-			<li>Solidot</li>
-			<li>TED</li>
-			<li>技术博客</li>
-		</ul>
+		{% for n in navi %}
+			{% for k, v in n.items() %}
+			<div class="section">
+				<div  class="category-title">
+					<h3>
+						<a href="#" target="_blank">{{k.title}}({{v|length}})</a>
+					</h3>
+				</div>
+				<ul>
+					{% for _ in v %}
+					<li><a href="{{_.url}}" target="_blank">{{_.title}}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endfor %}
+		{% endfor %}
 	</div>
-	<div class="col-lg-2">
-		<a href="#" target="_blank">Design</a>
-		<ul>
-			<li>Mile</li>
-			<li>淘宝UED</li>
-			<li>腾讯QQ</li>
-		</ul>
-	</div>
-	<div class="col-lg-2">
-		<a href="#" target="_blank">Launguage</a>
-		<ul>
-			<li>Python</li>
-			<li>Java</li>
-			<li>Erlang</li>
-			<li>Haskel</li>
-			<li>Jquery</li>
-			<li>CSS</li>
-			<li>Nodejs</li>
-			<li>PHP</li>
-			<li>Dot NET</li>
-		</ul>
-	</div>
-	<div class="col-lg-2">
-		<a href="#" target="_blank">Tools</a>
-		<ul>
-			<li>VIM</li>
-			<li>MAC</li>
-			<li>LINUX</li>
-		</ul>
-	</div>
-	<div class="col-lg-2">
-		<a href="#" target="_blank">Apple</a>
-		<ul>
-			<li>IOS</li>
-			<li>IPHONE</li>
-			<li>IPAD</li>
-		</ul>
-	</div>
+	{% endfor %}
 </div>
 
 {% endblock %}

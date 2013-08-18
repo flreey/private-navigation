@@ -1,0 +1,20 @@
+.section {
+  margin-bottom: 10px;
+}
+ul {
+  position: relative;
+  left: -40px;
+  list-style: none;
+}
+.category-title,
+.category-title a {
+  background-color: #F2F1EC;
+  font-weight: 500;
+  font-family: Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+a {
+  color: #000;
+}
+.row .col-lg-2 {
+  margin-right: 30px;
+}

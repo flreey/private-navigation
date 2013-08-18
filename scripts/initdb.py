@@ -17,7 +17,11 @@ with app.app_context():
 	'Design': ['Mile', '淘宝UED', '腾讯UX'], 'Launguage': ['Python', 'Java',
 		'Erlang', 'Haskel', 'Jquery', 'Css'], 'Tools': ['Vim', 'HHKB',
 			'Mockup', 'LiveReload'], 'Apple': ['IOS',
-			'IPHONE', 'IPad', 'MacOS']}
+				'IPHONE', 'IPad', 'MacOS']}
+
+	for i in range(3):
+		for k, v in data.copy().items():
+			data[k+'1'] = v
 
 	for cat, websites in data.items():
 		c = Category(user_id=u.id, title=cat).insert()

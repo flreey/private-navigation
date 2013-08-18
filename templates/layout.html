@@ -12,10 +12,8 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
 
-	{% block script %}
-	{% endblock %}
-
-	{% block style %}
+	<link href="{{url_for('static', filename='common.css')}}" rel="stylesheet" media="screen">
+	{% block expand_script %}
 	{% endblock %}
 
     <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
@@ -26,17 +24,17 @@
   <nav class="navbar" role="navigation">
 	  <!-- Brand and toggle get grouped for better mobile display -->
 	  <div class="navbar-header">
-		  <a class="navbar-brand" href="#">Title</a>
+		  <a class="navbar-brand" href="/">Home</a>
 	  </div>
 
 	  <div class="collapse navbar-collapse navbar-ex1-collapse">
 		  <ul class="nav navbar-nav navbar-right">
-			  <li><a href="#">Link</a></li>
+			  <li><a href="#">Custom</a></li>
 		  </ul>
 	  </div><!-- /.navbar-collapse -->
   </nav>
 
-  <div class="container">
+  <div class="container container-narrow">
 	  {% block container%}
 	  Here is Layout Template
 	  {% endblock %}
