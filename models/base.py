@@ -1,3 +1,5 @@
+import json
+
 from datetime import datetime
 
 from sqlalchemy import create_engine, Column, DateTime, Integer
@@ -27,6 +29,10 @@ class CommonModel:
 	create_at = Column(DateTime(), default=datetime.now)
 	update_at = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
 
+	@classmethod
+	def get(cls, id):
+		return cls.query.filter_by(id=id).first()
+
 	def insert(self, autocommit=True):
 		db_session.add(self)
 		if autocommit:
@@ -41,12 +47,15 @@ class CommonModel:
 			db_session.commit()
 		return self
 
-	def __repr__(self):
-		import json
+	@property
+	def json(self):
 		result = {}
 		for k, v in self.__dict__.items():
 			if issubclass(type(v), datetime):
 				v = datetime.strftime(v, '%Y-%m-%d %H:%M:%S')
-			if not k.startswith('_'):
+			if not k.startswith('_') and k != 'password':
 				result[k] = v
-		return json.dumps(result)
+		return result
+
+	def __repr__(self):
+		return json.dumps(self.json, indent=2)
