@@ -36,7 +36,7 @@ class CommonModel:
 	def insert(self, autocommit=True):
 		db_session.add(self)
 		if autocommit:
-			db_session.commit()
+			self._commit()
 		return self
 
 	update = insert
@@ -44,18 +44,21 @@ class CommonModel:
 	def delete(self, autocommit=True):
 		db_session.delete(self)
 		if autocommit:
-			db_session.commit()
+			self._commit()
 		return self
 
 	@property
 	def json(self):
 		result = {}
-		for k, v in self.__dict__.items():
+		for k in self.__mapper__.columns.keys():
+			v = getattr(self, k)
 			if issubclass(type(v), datetime):
 				v = datetime.strftime(v, '%Y-%m-%d %H:%M:%S')
-			if not k.startswith('_') and k != 'password':
-				result[k] = v
+			result[k] = v
 		return result
+
+	def _commit(self):
+		db_session.commit()
 
 	def __repr__(self):
 		return json.dumps(self.json, indent=2)

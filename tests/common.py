@@ -13,10 +13,8 @@ class Common:
 
 	def get(self, uri):
 		r = self.app.get(uri)
-		print(r.data)
 		return r
 
 	def post(self, uri, data=None):
 		r = self.app.post(uri, data=data)
-		print(r.data)
 		return r

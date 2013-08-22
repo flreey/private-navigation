@@ -1,6 +1,8 @@
 from flask import Flask, render_template, session, jsonify, request
 from flask.ext.restful import Resource, Api
 
+from forms.user_form import ApiUserForm
+
 app = Flask(__name__)
 app.config.from_object('config.settings.DevelpmentConfig')
 
@@ -31,11 +33,20 @@ class ApiUser(Resource):
 		return jsonify(User.get(user_id).json)
 
 	def post(self):
-		password = request.form['password']
-		email = request.form['email']
-		name = request.form['name']
-		u = User(name=name, password=password, email=email).insert()
-		return jsonify(u.json)
+		form = ApiUserForm(request.form)
+		if form.validate():
+			password = request.form['password']
+			email = request.form['email']
+			name = request.form['name']
+			u = User(name=name, password=password, email=email).insert()
+			return jsonify(u.json)
+		return jsonify({'code': 1, 'message': form.errors})
+
+	def put(self):
+		pass
+
+	def delete(self):
+		pass
 
 api.add_resource(ApiUser, '/api/user', '/api/user/<int:user_id>')
 
