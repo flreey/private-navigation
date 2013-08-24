@@ -10,7 +10,7 @@ api = Api(app)
 with app.app_context():
 	from models import *
 
-from apis import user
+import apis
 
 @app.route('/')
 def index():
