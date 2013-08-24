@@ -1,7 +1,6 @@
-from flask import Flask, render_template, session, jsonify, request
-from flask.ext.restful import Resource, Api
+from flask import Flask, render_template, session
 
-from forms.user_form import ApiUserForm
+from flask.ext.restful import Api
 
 app = Flask(__name__)
 app.config.from_object('config.settings.DevelpmentConfig')
@@ -10,6 +9,8 @@ api = Api(app)
 
 with app.app_context():
 	from models import *
+
+from apis import user
 
 @app.route('/')
 def index():
@@ -22,33 +23,11 @@ def index():
 		results.append({c: webs})
 
 	step = 5
-	navis = [[] for i in range(step)]
+	navis = [[]] * step
 	for n, r in enumerate(results):
 		navis[n % step].append(r)
 
 	return render_template('index.html', navis=navis)
-
-class ApiUser(Resource):
-	def get(self, user_id):
-		return jsonify(User.get(user_id).json)
-
-	def post(self):
-		form = ApiUserForm(request.form)
-		if form.validate():
-			password = request.form['password']
-			email = request.form['email']
-			name = request.form['name']
-			u = User(name=name, password=password, email=email).insert()
-			return jsonify(u.json)
-		return jsonify({'code': 1, 'message': form.errors})
-
-	def put(self):
-		pass
-
-	def delete(self):
-		pass
-
-api.add_resource(ApiUser, '/api/user', '/api/user/<int:user_id>')
 
 def main():
 	app.run(debug=True)

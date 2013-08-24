@@ -18,3 +18,11 @@ class Common:
 	def post(self, uri, data=None):
 		r = self.app.post(uri, data=data)
 		return r
+
+	def put(self, uri, data=None):
+		r = self.app.put(uri, data=data)
+		return r
+
+	def delete(self, uri):
+		r = self.app.delete(uri)
+		return r

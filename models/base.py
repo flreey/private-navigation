@@ -51,6 +51,7 @@ class CommonModel:
 	def json(self):
 		result = {}
 		for k in self.__mapper__.columns.keys():
+			if k == 'password': continue
 			v = getattr(self, k)
 			if issubclass(type(v), datetime):
 				v = datetime.strftime(v, '%Y-%m-%d %H:%M:%S')
