@@ -11,14 +11,13 @@ from forms.user_form import ApiUserForm
 class ApiUser(Resource):
 	@login_required
 	def get(self, user_id):
-		return jsonify(User.get(user_id).json)
+		return jsonify({'code': 0, 'data': User.get(user_id).json})
 
 	def post(self):
 		form = ApiUserForm(request.form)
 		if form.validate():
-			u = User(name=form.name.data,
-					password=form.password.data,
-					email=form.email.data).insert()
+			u = form.fill_data_to_instance(User())
+			u.insert()
 			return jsonify(code=0, data=u.json)
 		return jsonify({'code': 1, 'message': form.errors})
 
@@ -27,9 +26,7 @@ class ApiUser(Resource):
 		form = ApiUserForm(request.form)
 		if form.validate():
 			u = User.get(session['user_id'])
-			u.name = form.name.data
-			u.email = form.email.data
-			u.password = form.password.data
+			form.fill_data_to_instance(u)
 			u.update()
 			return jsonify(code=0, data=u.json)
 		return jsonify({'code': 1, 'message': form.errors})

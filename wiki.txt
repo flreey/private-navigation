@@ -1,0 +1,3 @@
+api return error code description list
+code: 1, data validate error
+code: 2, permission error
