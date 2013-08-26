@@ -1,12 +1,12 @@
-from flask import jsonify, request, session
+from flask import jsonify, request, session, current_app
 
-from flask.ext.restful import Resource
+from flask.ext.restful import Resource, Api
 
-from app import api
 from libs.util import login_required
 from models.website import WebSite
 from forms.website_form import ApiWebSiteForm
 
+api = Api(current_app)
 
 class ApiWebSite(Resource):
 	@login_required

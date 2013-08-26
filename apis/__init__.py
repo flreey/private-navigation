@@ -1,3 +1,3 @@
-from .user import api
-from .website import api
-from .category import api
+from . import user
+from . import category
+from . import website

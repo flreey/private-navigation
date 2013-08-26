@@ -1,12 +1,12 @@
-from flask import jsonify, request, session
+from flask import jsonify, request, session, current_app
 
-from flask.ext.restful import Resource
+from flask.ext.restful import Resource, Api
 
-from app import api
 from libs.util import login_required
 from models.user import User
 from forms.user_form import ApiUserForm
 
+api = Api(current_app)
 
 class ApiUser(Resource):
 	@login_required
@@ -40,3 +40,12 @@ class ApiUser(Resource):
 		return jsonify({'code': 1, 'message': 'user not exist'})
 
 api.add_resource(ApiUser, '/api/user', '/api/user/<int:user_id>')
+
+@current_app.route('/login', methods=['POST'])
+def login():
+	email = request.form['email']
+	password = request.form['password']
+	u = User.query.filter_by(email=email).first()
+	if u and u.valid_password(password):
+		return jsonify({'code': 0, 'data': u.json})
+	return jsonify({'code': 1, 'message': 'email or password not correct'})

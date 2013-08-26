@@ -2,25 +2,15 @@
   "manifest_version": 2,
 
   "name": "PN",
-  "description": "private navigation",
-	"icons": {"48": "icon48.png", "128": "icon128.png"},
+  "description": "This extension demonstrates a browser action with pn.",
   "version": "0.1",
-
-
-  "browser_action": {
-    "default_icon": "icon128.png",
-    "default_title": "PN"
-  },
-
-  "background": {
-		"scripts": [
-            "lib/jquery-2.0.3.min.js",
-            "js/background.js"
-        ]
-  },
 
   "permissions": [
       "cookies",
-      "storage"
-  ]
+      "http://*/*"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  }
 }

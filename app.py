@@ -5,12 +5,10 @@ from flask.ext.restful import Api
 app = Flask(__name__)
 app.config.from_object('config.settings.DevelpmentConfig')
 
-api = Api(app)
 
 with app.app_context():
 	from models import *
-
-import apis
+	import apis
 
 @app.route('/')
 def index():
