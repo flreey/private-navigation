@@ -41,11 +41,14 @@ class ApiUser(Resource):
 
 api.add_resource(ApiUser, '/api/user', '/api/user/<int:user_id>')
 
-@current_app.route('/login', methods=['POST'])
+@current_app.route('/api/login', methods=['post'])
 def login():
 	email = request.form['email']
 	password = request.form['password']
 	u = User.query.filter_by(email=email).first()
 	if u and u.valid_password(password):
-		return jsonify({'code': 0, 'data': u.json})
+		session['user_id'] = u.id
+		res = jsonify({'code': 0, 'data': u.json})
+		res.set_cookie('user_id', str(u.id))
+		return res
 	return jsonify({'code': 1, 'message': 'email or password not correct'})

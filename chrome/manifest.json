@@ -6,8 +6,9 @@
   "version": "0.1",
 
   "permissions": [
-      "cookies",
-      "http://*/*"
+    "tabs",
+    "cookies",
+    "*://*/*"
   ],
   "browser_action": {
     "default_icon": "icon.png",
