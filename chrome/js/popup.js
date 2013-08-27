@@ -38,7 +38,7 @@ $('#link-form').on('submit', function(){
     var url = $('#inputUrl').val().trim();
     var name = $('#inputName').val().trim();
     console.log(url);
-    $.post(domain+'/api/website', {'title': name, 'url': url, 'category_id': 0}, function(data){
+    $.post(domain+'/api/website', {'title': name, 'url': url}, function(data){
         if (data.code === 0){
           $('.form-group').removeClass('has-error');
           window.close();

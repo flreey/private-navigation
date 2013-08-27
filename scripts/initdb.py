@@ -14,9 +14,9 @@ with app.app_context():
 	u = User(name='flreey', email='flreey@gmail.com', password='123456').insert()
 
 	data = {'Blog': ['InfoQ', 'ItEye', 'CSDN', 'Solidot', '技术博客'],
-	'Design': ['Mile', '淘宝UED', '腾讯UX'], 'Launguage': ['Python', 'Java',
+	'Design': ['Mile', '淘宝UED' * 2, '腾讯UX'], 'Launguage': ['Python', 'Java',
 		'Erlang', 'Haskel', 'Jquery', 'Css'], 'Tools': ['Vim', 'HHKB',
-			'Mockup', 'LiveReload'], 'Apple': ['IOS',
+			'Mockup', 'LiveReload' * 2], 'Apple' * 2: ['IOS',
 				'IPHONE', 'IPad', 'MacOS']}
 
 	for i in range(3):

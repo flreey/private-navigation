@@ -42,7 +42,7 @@ class ApiUser(Resource):
 api.add_resource(ApiUser, '/api/user', '/api/user/<int:user_id>')
 
 @current_app.route('/api/login', methods=['post'])
-def login():
+def apilogin():
 	email = request.form['email']
 	password = request.form['password']
 	u = User.query.filter_by(email=email).first()
