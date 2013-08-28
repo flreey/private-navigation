@@ -3,8 +3,14 @@ from flask import Flask, render_template, session, request, redirect
 from forms.user_form import UserForm
 
 app = Flask(__name__)
-app.config.from_object('config.settings.DevelpmentConfig')
 
+import os
+if os.environ.get('PN', 'DEV') == 'DEV':
+	config_object = 'config.settings.DevelopmentConfig'
+else:
+	config_object = 'config.settings.ProductionConfig'
+
+app.config.from_object(config_object)
 
 with app.app_context():
 	from models import *
@@ -14,7 +20,7 @@ with app.app_context():
 def index():
 	user_id = session.get('user_id', 1)
 
-	cats = Category.query.filter_by(user_id=user_id).all()	
+	cats = Category.query.filter_by(user_id=user_id).order_by('title').all()	
 	results = []
 	for c in cats:
 		webs = WebSite.query.filter('category_id=:category_id').params(category_id=c.id).all()

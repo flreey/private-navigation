@@ -5,6 +5,7 @@
 
 {% block container %}
 <div class="row">
+	<div class="col-lg-1"></div>
 	<form method="get" action="http://www.google.com/search" class="form-inline" role="form" target="_blank">
 		<div class="col-md-8">
 			<input type="text" name="q" class="form-control" maxlength="255" value="" autofocus/>
@@ -17,24 +18,24 @@
 	{% for navi in navis %}
 	<div class="col-lg-2">
 		{% for n in navi %}
-			{% for k, v in n.items() %}
-			<div class="section">
-				<div  class="category-title">
-					<h3>
-						<span class="label label-info"> <a href="#" target="_blank">{{k.title}}({{v|length}})</a> </span>
-					</h3>
-				</div>
+		{% for k, v in n.items() %}
+		<div class="panel panel-info pn-panel">
+			<div class="panel-heading pn-panel-heading">
+				{{k.title}}
+			</div>
+			<div class="panel-body pn-panel-body">
 				<ul>
 					{% for _ in v %}
 					<li>
-					<span class="label label-default">
+					<span class="label">
 						<a href="{{_.url}}" target="_blank">{{_.title}}</a>
 					</span>
 					</li>
 					{% endfor %}
 				</ul>
 			</div>
-			{% endfor %}
+		</div>
+		{% endfor %}
 		{% endfor %}
 	</div>
 	{% endfor %}
