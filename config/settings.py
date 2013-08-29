@@ -10,4 +10,4 @@ class DevelopmentConfig(Config):
 	DATABASE_URI = 'sqlite:////tmp/test.db'
 
 class ProductionConfig(Config):
-	DATABASE_URI = 'postgresql://pn:NAVI123$%^@localhost/pn'
+	DATABASE_URI = 'postgresql://flreey@localhost/pn'
