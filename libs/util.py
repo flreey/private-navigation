@@ -13,3 +13,6 @@ def login_required(func):
 		raise AuthorticationException('user not login')
 
 	return wrapper
+
+def user_login(user):
+	session['user_id'] = user.id

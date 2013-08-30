@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, request, redirect
 
-from forms.user_form import UserForm
+from forms.user_form import UserForm, RegisterForm
+from libs.util import user_login
 
 app = Flask(__name__)
 
@@ -43,13 +44,24 @@ def login():
 		email = form.email.data
 		u = User.query.filter_by(email=email).first()
 		if u and u.valid_password(form.password.data):
-			session['user_id'] = u.id
+			user_login(u)
 	return redirect('/')
 
 @app.route('/logout', methods=['GET'])
 def logout():
 	del session['user_id']
-	return redirect('')
+	return redirect('/')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+	form = RegisterForm()
+	if request.method == 'POST' and form.validate():
+		u = form.fill_data_to_instance(User())
+		u.insert()
+		user_login(u)
+		return redirect('/')
+
+	return render_template('register.html', form=form)
 
 def main():
 	app.run(debug=True)
