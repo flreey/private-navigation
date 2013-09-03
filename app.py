@@ -17,9 +17,22 @@ with app.app_context():
 	from models import *
 	import apis
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-	user_id = session.get('user_id', 1)
+	form = UserForm(request.form)
+	if request.method == 'POST':
+		if form.validate():
+			email = form.email.data
+			u = User.query.filter_by(email=email).first()
+			if not u:
+				form.email.errors.append('Eamil is incorrect')
+			elif not u.valid_password(form.password.data):
+				form.password.errors.append('Password is incorrect')
+			else:
+				user_login(u)
+
+	user = User.get(session.get('user_id'))
+	user_id = user.id if user else 1
 
 	cats = Category.query.filter_by(user_id=user_id).order_by('title').all()	
 	results = []
@@ -32,20 +45,11 @@ def index():
 	for n, r in enumerate(results):
 		navis[n % step].append(r)
 
-	user = User.get(session.get('user_id'))
-	user = user.json if user else None
-	return render_template('index.html', navis=navis, user=user, form=UserForm())
-
+	return render_template('index.html', navis=navis, user=user, form=form)
 
 @app.route('/login', methods=['POST'])
 def login():
-	form = UserForm(request.form)
-	if form.validate():
-		email = form.email.data
-		u = User.query.filter_by(email=email).first()
-		if u and u.valid_password(form.password.data):
-			user_login(u)
-	return redirect('/')
+		return redirect('/')
 
 @app.route('/logout', methods=['GET'])
 def logout():

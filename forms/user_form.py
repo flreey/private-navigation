@@ -27,8 +27,9 @@ class RegisterForm(UserForm):
 			u = User.query.filter(or_(User.name==self.name.data, User.email==self.email.data)).first()
 			if u:
 				if u.name == self.name.data:
-					self.name.errors= ['user name exists']
+					self.name.errors.append('user name exists')
 				elif u.email == self.email.data:
-					self.email.errors = ['email exists']
+					self.email.errors.append('email exists')
 				return False
-		return True
+			return True
+		return False

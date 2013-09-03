@@ -2,7 +2,9 @@
 Just for test in local
 """
 import sys
-sys.path.insert(0, '../')
+import os
+cur = os.path.realpath(__file__)
+sys.path.insert(0, os.path.join(os.path.dirname(cur), '../'))
 
 from app import app
 

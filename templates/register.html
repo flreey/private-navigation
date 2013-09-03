@@ -71,11 +71,17 @@
 			</div>
 		</div>
 	</form>
-	{% if form.errors %}
-	{% for k, v in form.errors.items() %}
-	{{v}}
-	{% endfor %}
-	{% endif %}
+	  {% if form.errors %}
+	  <script type="text/javascript">
+		$().ready(function(){
+		  {% for k, v in form.errors.items() %}
+		  $('input[name={{k}}]').attr('placeholder', '{{v[0]}}');
+		  $('input[name={{k}}]').addClass('alert-danger');
+		  {% endfor %}
+		})
+	  </script>
+	  {% endif %}
+
 	{% endblock %}
 </div>
 
