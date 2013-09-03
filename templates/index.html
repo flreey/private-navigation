@@ -14,6 +14,14 @@
 	</form>
 </div>
 <div class="clearfix"></div>
+<div class="row pn-editor">
+	<button type="button" class="btn btn-default btn-lg">
+		<span class="glyphicon glyphicon-plus"></span>
+	</button>
+	<button type="button" class="btn btn-default btn-lg">
+		<span class="glyphicon glyphicon-trash"></span>
+	</button>
+</div>
 <div class="row">
 	{% for navi in navis %}
 	<div class="col-lg-2">
@@ -28,7 +36,9 @@
 					{% for _ in v %}
 					<li>
 					<span class="label">
-						<a href="{{_.url}}" target="_blank">{{_.title}}</a>
+						<a href="{{_.url}}" target="_blank">
+							{{_.title}}
+						</a>
 					</span>
 					</li>
 					{% endfor %}
