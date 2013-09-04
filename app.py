@@ -38,7 +38,10 @@ def index():
 	results = []
 	for c in cats:
 		webs = WebSite.query.filter('category_id=:category_id').params(category_id=c.id).all()
-		results.append({c: webs})
+		if c.title == 'Default':
+			results.insert(0, {c: webs})
+		else:
+			results.append({c: webs})
 
 	step = min(len(results), 5)
 	navis = [[] for i in range(step)]

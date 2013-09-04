@@ -37,7 +37,8 @@
 					<li>
 					<span class="label">
 						<a href="{{_.url}}" target="_blank">
-							{{_.title}}
+							<img src="{{_.image}}" alt="" width=16/>
+							{{_.title|truncate(12, True)}}
 						</a>
 					</span>
 					</li>
